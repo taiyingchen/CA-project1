@@ -11,14 +11,40 @@ input               rst_i;
 input               start_i;
 
 wire    [31:0]  inst_addr, inst;
-wire    zero;
+ //project1 new
+wire    zero, branch;
+wire    andGate_o;
+assign  andGate_o = branch  && zero;
 
+//project1 new
 Control Control(
     .Op_i       (inst[6:0]),
-    // .RegDst_o   (),
+    //EX
     .ALUOp_o    (ALU_Control.ALUOp_i),
     .ALUSrc_o   (MUX_ALUSrc.select_i),
+    //MEM
+    .Branch_o   (branch)
+    .MemRead_o  (Data_Memory.MemRead_i)
+    .MemWrite_o (Data_Memory.MemWrite_i)
+    //WB
     .RegWrite_o (Registers.RegWrite_i)
+    .MemtoReg_o (MUX_RegSrc.select_i)
+);
+
+
+//project1 new
+MUX32 MUX_PCSrc(
+    .data1_i    (Add_PC.data_o),
+    .data2_i    (Add_Imm.data_o),
+    .select_i   (andGate_o),
+    .data_o     (PC.pc_i)
+);
+
+//project1 new
+Adder Add_Imm(
+    .data1_in   (PC.pc_o),
+    .data2_in   (Sign_Extend<<1),
+    .data_o     (MUX_PCSrc.data2_i)
 );
 
 Adder Add_PC(
@@ -31,7 +57,7 @@ PC PC(
     .clk_i      (clk_i),
     .rst_i      (rst_i),
     .start_i    (start_i),
-    .pc_i       (Add_PC.data_o),
+    .pc_i       (MUX_PCSrc.data_o),//project1 new
     .pc_o       (inst_addr)
 );
 
@@ -45,7 +71,7 @@ Registers Registers(
     .RS1addr_i   (inst[19:15]),
     .RS2addr_i   (inst[24:20]),
     .RDaddr_i   (inst[11:7]),
-    .RDdata_i   (MUX_RegSrc.data_o),
+    .RDdata_i   (MUX_RegSrc.data_o),//project1 new
     .RegWrite_i (Control.RegWrite_o),
     .RS1data_o   (ALU.data1_i),
     .RS2data_o   (MUX_ALUSrc.data1_i)
