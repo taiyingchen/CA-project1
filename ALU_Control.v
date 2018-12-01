@@ -13,7 +13,9 @@ output reg  [2:0]   ALUCtrl_o;
 
 always@(*) begin
     if (ALUOp_i == 2'b00)
-        ALUCtrl_o = 3'b010; // addi
+        ALUCtrl_o = 3'b010; // addi, ld, sd
+    else if(ALUOp_i == 2'b01)	//beq
+	ALUCtrl_o = 3'b110;
     else if(ALUOp_i == 2'b10) begin
         case(funct3_i)
             3'b110: ALUCtrl_o = 3'b001; // or
