@@ -18,7 +18,7 @@ output reg  [31:0]  data_o;
 /*
 Notice: hard code due to only lw and sw instruction
 */
-reg     [31:0]  memory  [0:7]; // total size is 32 Bytes = 4 Bytes * 8
+reg     [7:0]  memory  [0:31]; // total size is 32 Bytes = 1 Byte * 32
 wire    [31:0]  addr_i_shift;
 
 assign addr_i_shift = addr_i >> 2;
