@@ -14,7 +14,7 @@ always @ (data_i) begin
 	7'b0110011://R-format  
 	    data_o = {31{1'bx}};//don't care
 	7'b0010011: //i type
-	    data_o = {{20{data_i[11]}}, data_i};
+	    data_o = {{20{data_i[31]}}, data_i[31:20]};
 	7'b0000011://ld
 	    data_o = {{20{data_i[31]}}, data_i[31:25], data_i[11:7]};
 	7'b0100011://sd
