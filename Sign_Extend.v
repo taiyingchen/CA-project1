@@ -16,7 +16,7 @@ always @ (data_i) begin
 	7'b0010011: //i type
 	    data_o = {{20{data_i[31]}}, data_i[31:20]};
 	7'b0000011://ld
-	    data_o = {{20{data_i[31]}}, data_i[31:25], data_i[11:7]};
+	    data_o = {{20{data_i[31]}}, data_i[31:20]};
 	7'b0100011://sd
 	    data_o = {{20{data_i[31]}}, data_i[31:25], data_i[11:7]};
 	7'b1100011://beq
