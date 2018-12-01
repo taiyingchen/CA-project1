@@ -98,6 +98,7 @@ ALU ALU(
 );
 
 Data_Memory Data_Memory(
+    .clk_i      (clk_i),
     .addr_i     (ALU.data_o),
     .data_i     (Registers.RS2data_o),
     .MemRead_i  (Control.MemRead_o),
