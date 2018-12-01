@@ -24,9 +24,9 @@ Notice: hard code due to only lw and sw instruction
 // Addressing by Little Endian
 always@(MemWrite_i or MemRead_i or addr_i or data_i) begin
     if (MemWrite_i) // sw
-        memory[addr_i] = data_i;
+        memory[addr_i] <= data_i;
     if (MemRead_i) // lw
-        data_o = memory[addr_i];
+        data_o <= memory[addr_i];
 end
 
 endmodule
