@@ -29,6 +29,7 @@ always@(posedge clk_i) begin
         memory[addr_i] <= data_i;
     if (MemRead_i) // lw
         data_o <= {memory[addr_i+3], memory[addr_i+2], memory[addr_i+1], memory[addr_i]};
+	$display("addr_i=%d, data_o=%d",addr_i,data_o);
 end
 
 endmodule
