@@ -59,7 +59,7 @@ always @ (Op_i) begin
 	    RegWrite_o = 0;
 	    MemtoReg_o = 1'bx;
 	  end
-	7'b1100011://sd
+	7'b1100011://beq
 	  begin  
 	    ALUOp_o = 2'b01;
 	    ALUSrc_o = 0;

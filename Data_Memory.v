@@ -1,5 +1,6 @@
 module Data_Memory
 (
+    clk_i,
     addr_i, 
     data_i,
     MemRead_i,
@@ -8,6 +9,7 @@ module Data_Memory
 );
 
 // Interface
+input   clk_i;
 input   [31:0]      addr_i;
 input   [31:0]      data_i;
 input   MemRead_i;
@@ -15,19 +17,18 @@ input   MemWrite_i;
 output reg  [31:0]  data_o;
 
 // Data memory
+reg     [7:0]  memory  [0:31]; // total size is 32 Bytes = 1 Byte * 32
+wire    [31:0]  addr_i_shift;
+
 /*
 Notice: hard code due to only lw and sw instruction
 */
-reg     [31:0]  memory  [0:7]; // total size is 32 Bytes = 4 Bytes * 8
-wire    [31:0]  addr_i_shift;
-
-assign addr_i_shift = addr_i >> 2;
-
-always@(MemWrite_i or MemRead_i or addr_i or data_i) begin
+// Addressing by Little Endian
+always@(posedge clk_i) begin
     if (MemWrite_i) // sw
-        memory[addr_i_shift] = data_i;
+        memory[addr_i] <= data_i;
     if (MemRead_i) // lw
-        data_o = memory[addr_i_shift];
+        data_o <= {memory[addr_i+3], memory[addr_i+2], memory[addr_i+1], memory[addr_i]};
 end
 
 endmodule
