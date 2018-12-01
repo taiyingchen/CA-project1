@@ -23,11 +23,11 @@ Control Control(
     .ALUOp_o    (ALU_Control.ALUOp_i),
     .ALUSrc_o   (MUX_ALUSrc.select_i),
     //MEM
-    .Branch_o   (branch)
-    .MemRead_o  (Data_Memory.MemRead_i)
-    .MemWrite_o (Data_Memory.MemWrite_i)
+    .Branch_o   (branch),
+    .MemRead_o  (Data_Memory.MemRead_i),
+    .MemWrite_o (Data_Memory.MemWrite_i),
     //WB
-    .RegWrite_o (Registers.RegWrite_i)
+    .RegWrite_o (Registers.RegWrite_i),
     .MemtoReg_o (MUX_RegSrc.select_i)
 );
 
@@ -43,7 +43,7 @@ MUX32 MUX_PCSrc(
 //project1 new
 Adder Add_Imm(
     .data1_in   (PC.pc_o),
-    .data2_in   (Sign_Extend<<1),
+    .data2_in   (Sign_Extend.data_o<<1),
     .data_o     (MUX_PCSrc.data2_i)
 );
 

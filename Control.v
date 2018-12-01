@@ -1,10 +1,13 @@
 module Control
 (
     Op_i,
-    //RegDst_o,
     ALUOp_o,
     ALUSrc_o,
-    RegWrite_o
+    Branch_o,
+    MemRead_o,
+    MemWrite_o, 
+    RegWrite_o,
+    MemtoReg_o
 );
 
 input	[6:0]	Op_i;
