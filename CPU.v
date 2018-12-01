@@ -42,7 +42,7 @@ MUX32 MUX_PCSrc(
 
 //project1 new
 Adder Add_Imm(
-    .data1_in   (PC.pc_o),
+    .data1_in   (inst_addr),
     .data2_in   (Sign_Extend.data_o<<1),
     .data_o     (MUX_PCSrc.data2_i)
 );
@@ -50,7 +50,7 @@ Adder Add_Imm(
 Adder Add_PC(
     .data1_in   (inst_addr),
     .data2_in   (32'd4),
-    .data_o     (PC.pc_i)
+    .data_o     (MUX_PCSrc.data1_i)
 );
 
 PC PC(
@@ -85,7 +85,7 @@ MUX32 MUX_ALUSrc(
 );
 
 Sign_Extend Sign_Extend(
-    .data_i     (inst[31:20]),
+    .data_i     (inst),
     .data_o     (MUX_ALUSrc.data2_i)
 );
 
