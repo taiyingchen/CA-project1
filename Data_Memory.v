@@ -28,7 +28,10 @@ always@(posedge clk_i) begin
     if (MemWrite_i) // sw
         memory[addr_i] <= data_i;
     if (MemRead_i) // lw
-        data_o <= memory[addr_i];
+        data_o[7:0] <= memory[addr_i];
+        data_i[15:8] <= memory[addr_i+1];
+        data_i[23:16] <= memory[addr_i+2];
+        data_i[31:24] <= memory[addr_i+3];
 end
 
 endmodule
