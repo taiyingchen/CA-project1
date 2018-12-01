@@ -25,9 +25,9 @@ assign addr_i_shift = addr_i >> 2;
 
 always@(MemWrite_i or MemRead_i or addr_i or data_i) begin
     if (MemWrite_i) // sw
-        memory[addr_i_shift] = data_i;
+        memory[addr_i] = data_i;
     if (MemRead_i) // lw
-        data_o = memory[addr_i_shift];
+        data_o = memory[addr_i];
 end
 
 endmodule
