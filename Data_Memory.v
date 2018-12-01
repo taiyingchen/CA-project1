@@ -2,7 +2,7 @@ module Data_Memory
 (
     addr_i, 
     data_i,
-    MemRead_i
+    MemRead_i,
     MemWrite_i,
     data_o
 );

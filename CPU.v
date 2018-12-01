@@ -11,7 +11,7 @@ input               rst_i;
 input               start_i;
 
 wire    [31:0]  inst_addr, inst;
- //project1 new
+//project1 new
 wire    zero, branch;
 wire    andGate_o;
 assign  andGate_o = branch  && zero;
