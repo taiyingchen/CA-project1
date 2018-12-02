@@ -29,7 +29,6 @@ always@(posedge clk_i) begin
     $display("Data_Memmory.MemRead_i = %d", MemRead_i);
     $display("Data_Memmory.MemWrite_i = %d", MemWrite_i);
     $display("Data_Memmory.data_o = %d", data_o);
-    $display("Data_Memmory.test_o = %d", test_o);
 
     if (MemWrite_i) begin // sw
         memory[addr_i] <= data_i[7:0];
