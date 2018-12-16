@@ -53,7 +53,7 @@ Adder Add_Imm(//Shouldhould we put this into the ID stage, and pass PC through t
 Adder Add_PC(
     .data1_in   (inst_addr),
     .data2_in   (32'd4),
-    .data_o     (PC.pc_i)
+    .data_o     (MUX_PCSrc.data1_i)
 );
 
 
