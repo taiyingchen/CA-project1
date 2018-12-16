@@ -1,4 +1,4 @@
-module ID_EXEX (ID_Flush_lwstall,  RegWrite_in, MemtoReg_in, RegWrite_out, 
+module ID_EX (ID_Flush_lwstall,  RegWrite_in, MemtoReg_in, RegWrite_out, 
 	MemtoReg_out, MemRead_in, MemWrite_in, MemRead_out, MemWrite_out, ALUSrc_in, 
 	ALUSrc_out, ALUOp_in, ALUOp_out, reg_read_data_1_in, reg_read_data_2_in, 
 	immi_sign_extended_in, reg_read_data_1_out, reg_read_data_2_out, immi_sign_extended_out, 
