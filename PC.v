@@ -22,11 +22,10 @@ reg     [31:0]      pc_o;
 
 always@(posedge clk_i) begin
     // Use start signal to replace reset signal
-    if(~start_i) begin
+    if(~start_i)
         pc_o <= 32'b0;
-    end
-    if (~PCWrite_i)
-	    pc_o <= pc_o;
+    else if (~PCWrite_i)
+	pc_o <= pc_o;
     else begin
         if(start_i)
             pc_o <= pc_i;
