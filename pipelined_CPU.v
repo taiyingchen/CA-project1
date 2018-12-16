@@ -99,6 +99,8 @@ Control Control(//flush,hazard not yet
 
 //project1 new (Lin)
 wire	[31:0]	WriteBack_data;
+
+
 Registers Registers(
     .clk_i      (clk_i),
     .RS1addr_i   (inst[19:15]),
@@ -110,10 +112,11 @@ Registers Registers(
     .RS2data_o   (RS2data)
 );
 
-
 //project1 new (Lin)
+wire	[31:0]	imm_in;
+assign 	imm_in = (inst[6:0]==7'b0100011)?{inst[31:25],inst[11:7]}:inst[31:20];
 Sign_Extend Sign_Extend(
-    .data_i     (inst[31:20]),
+    .data_i     (imm_in),
     .data_o     (imm_sign_extended_data)
 );
 
@@ -245,7 +248,6 @@ Data_Memory Data_Memory(
 );
 
 //project1 new (Lin)
-wire 	[4:0]	;//determine which register to write back, and to forwarding unit
 MEM_WB MEM_WB_Reg(
 	.RegWrite_in		(EX_MEM_RegWrite), 
 	.MemtoReg_in		(EX_MEM_Reg.MemtoReg_out), 

@@ -1,0 +1,141 @@
+C:/Users/user/Desktop/CA-project1/Control.v {1 {vlog -work work -stats=none C:/Users/user/Desktop/CA-project1/Control.v
+Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+-- Compiling module Control
+
+Top level modules:
+	Control
+
+} {} {}} C:/Users/user/Desktop/CA-project1/ID_EX.v {1 {vlog -work work -stats=none C:/Users/user/Desktop/CA-project1/ID_EX.v
+Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+-- Compiling module ID_EX
+
+Top level modules:
+	ID_EX
+
+} {} {}} C:/Users/user/Desktop/CA-project1/ALU.v {1 {vlog -work work -stats=none C:/Users/user/Desktop/CA-project1/ALU.v
+Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+-- Compiling module ALU
+
+Top level modules:
+	ALU
+
+} {} {}} C:/Users/user/Desktop/CA-project1/Data_Memory.v {1 {vlog -work work -stats=none C:/Users/user/Desktop/CA-project1/Data_Memory.v
+Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+-- Compiling module Data_Memory
+
+Top level modules:
+	Data_Memory
+
+} {} {}} C:/Users/user/Desktop/CA-project1/Forwarding_Unit.v {1 {vlog -work work -stats=none C:/Users/user/Desktop/CA-project1/Forwarding_Unit.v
+Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+-- Compiling module Forwarding_Unit
+
+Top level modules:
+	Forwarding_Unit
+
+} {} {}} C:/Users/user/Desktop/CA-project1/PC.v {1 {vlog -work work -stats=none C:/Users/user/Desktop/CA-project1/PC.v
+Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+-- Compiling module PC
+
+Top level modules:
+	PC
+
+} {} {}} C:/Users/user/Desktop/CA-project1/EX_MEM.v {1 {vlog -work work -stats=none C:/Users/user/Desktop/CA-project1/EX_MEM.v
+Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+-- Compiling module EX_MEM
+
+Top level modules:
+	EX_MEM
+
+} {} {}} C:/Users/user/Desktop/CA-project1/IF_ID.v {1 {vlog -work work -stats=none C:/Users/user/Desktop/CA-project1/IF_ID.v
+Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+-- Compiling module IF_ID
+
+Top level modules:
+	IF_ID
+
+} {} {}} C:/Users/user/Desktop/CA-project1/MUX32_4to1.v {1 {vlog -work work -stats=none C:/Users/user/Desktop/CA-project1/MUX32_4to1.v
+Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+-- Compiling module MUX32_4to1
+
+Top level modules:
+	MUX32_4to1
+
+} {} {}} C:/Users/user/Desktop/CA-project1/Hazard_Detection_Unit.v {1 {vlog -work work -stats=none C:/Users/user/Desktop/CA-project1/Hazard_Detection_Unit.v
+Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+-- Compiling module Hazard_Detection_Unit
+
+Top level modules:
+	Hazard_Detection_Unit
+
+} {} {}} C:/Users/user/Desktop/CA-project1/CPU.v {1 {vlog -work work -stats=none C:/Users/user/Desktop/CA-project1/CPU.v
+Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+-- Compiling module CPU
+
+Top level modules:
+	CPU
+
+} {} {}} C:/Users/user/Desktop/CA-project1/Adder.v {1 {vlog -work work -stats=none C:/Users/user/Desktop/CA-project1/Adder.v
+Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+-- Compiling module Adder
+
+Top level modules:
+	Adder
+
+} {} {}} C:/Users/user/Desktop/CA-project1/testbench.v {1 {vlog -work work -stats=none C:/Users/user/Desktop/CA-project1/testbench.v
+Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+-- Compiling module TestBench
+
+Top level modules:
+	TestBench
+
+} {} {}} C:/Users/user/Desktop/CA-project1/Registers.v {1 {vlog -work work -stats=none C:/Users/user/Desktop/CA-project1/Registers.v
+Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+-- Compiling module Registers
+
+Top level modules:
+	Registers
+
+} {} {}} C:/Users/user/Desktop/CA-project1/Sign_Extend.v {1 {vlog -work work -stats=none C:/Users/user/Desktop/CA-project1/Sign_Extend.v
+Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+-- Compiling module Sign_Extend
+
+Top level modules:
+	Sign_Extend
+
+} {} {}} C:/Users/user/Desktop/CA-project1/ALU_Control.v {1 {vlog -work work -stats=none C:/Users/user/Desktop/CA-project1/ALU_Control.v
+Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+-- Compiling module ALU_Control
+
+Top level modules:
+	ALU_Control
+
+} {} {}} C:/Users/user/Desktop/CA-project1/Instruction_Memory.v {1 {vlog -work work -stats=none C:/Users/user/Desktop/CA-project1/Instruction_Memory.v
+Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+-- Compiling module Instruction_Memory
+
+Top level modules:
+	Instruction_Memory
+
+} {} {}} C:/Users/user/Desktop/CA-project1/MUX32_3to1.v {1 {vlog -work work -stats=none C:/Users/user/Desktop/CA-project1/MUX32_3to1.v
+Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+-- Compiling module MUX32_3to1
+
+Top level modules:
+	MUX32_3to1
+
+} {} {}} C:/Users/user/Desktop/CA-project1/MEM_WB.v {1 {vlog -work work -stats=none C:/Users/user/Desktop/CA-project1/MEM_WB.v
+Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+-- Compiling module MEM_WB
+
+Top level modules:
+	MEM_WB
+
+} {} {}} C:/Users/user/Desktop/CA-project1/MUX32.v {1 {vlog -work work -stats=none C:/Users/user/Desktop/CA-project1/MUX32.v
+Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+-- Compiling module MUX32
+
+Top level modules:
+	MUX32
+
+} {} {}}
