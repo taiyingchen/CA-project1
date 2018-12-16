@@ -21,8 +21,8 @@ output reg  Flush_o;
 // Detection unit
 wire    equal_Rs1;
 wire    equal_Rs2;
-assign equal_Rs1 = (ID_EX_MemRead_i == IF_ID_RegisterRs1_i) ? 1 : 0;
-assign equal_Rs2 = (ID_EX_MemRead_i == IF_ID_RegisterRs2_i) ? 1 : 0;
+assign equal_Rs1 = (ID_EX_RegisterRd_i == IF_ID_RegisterRs1_i) ? 1 : 0;
+assign equal_Rs2 = (ID_EX_RegisterRd_i == IF_ID_RegisterRs2_i) ? 1 : 0;
 
 always@(ID_EX_MemRead_i or equal_Rs1 or equal_Rs2) begin
     // Stall the pipeline and flush instruction in ID stage
