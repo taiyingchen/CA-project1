@@ -42,6 +42,7 @@ initial begin
     
     // Set Input n into data memory at 0x00
     CPU.Data_Memory.memory[0] = 8'h5;       // n = 5 for example
+    CPU.Registers.register[8] = 32'h5;
     
     Clk = 1;
     //Reset = 0;
@@ -55,7 +56,7 @@ initial begin
 end
   
 always@(posedge Clk) begin
-    if(counter == 30)    // stop after 30 cycles
+    if(counter == 10)    // stop after 30 cycles
         $stop;
 
     // put in your own signal to count stall and flush
@@ -63,8 +64,49 @@ always@(posedge Clk) begin
     // if(CPU.HazzardDetection.Flush_o == 1)flush = flush + 1;  
 
     // print PC
+    $display("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n");
+
     $fdisplay(outfile, "cycle = %d, Start = %d, Stall = %d, Flush = %d\nPC = %d", counter, Start, stall, flush, CPU.PC.pc_o);
-    
+
+    $display("\n##### IF Stage #####\n");
+
+	$display("PC.pc_i = %d", CPU.PC.pc_i);
+	$display("PC.pc_o = %d", CPU.PC.pc_o);
+
+	$display("branch = %d", CPU.branch);
+	$display("zero = %d", CPU.zero);
+	$display("Add_Imm.data1_in = %d", CPU.Add_Imm.data1_in);
+	$display("Sign_Extend.data_o = %d", CPU.Sign_Extend.data_o);
+	$display("MUX_PCSrc.data1_i = %d", CPU.MUX_PCSrc.data1_i);
+	$display("MUX_PCSrc.data2_i = %d", CPU.MUX_PCSrc.data2_i);
+	$display("MUX_PCSrc.select_i = %d", CPU.MUX_PCSrc.select_i);
+
+	$display("\n\nIF_ID_Reg.PC_out = %d", CPU.IF_ID_Reg.PC_out);
+	$display("IF_ID_Reg.instruction_out = %d", CPU.IF_ID_Reg.PC_out);
+	$display("IF_ID_Reg.IF_ID_Write = %d", CPU.IF_ID_Reg.IF_ID_Write);
+
+    $display("\n##### ID Stage #####\n");
+
+    $display("\n##### EX Stage #####\n");
+
+    $display("ALU.data_o = %d", CPU.ALU.data_o);
+
+    $display("\n##### MEM Stage #####\n");
+
+	$display("MEM_WB_Reg.RegWrite_out = %d", CPU.MEM_WB_Reg.RegWrite_out);
+	$display("MEM_WB_Reg.MemtoReg_out = %d", CPU.MEM_WB_Reg.MemtoReg_out);
+	$display("MEM_WB_Reg.D_MEM_read_data_out = %d", CPU.MEM_WB_Reg.D_MEM_read_data_out);
+	$display("MEM_WB_Reg.D_MEM_read_addr_out = %d", CPU.MEM_WB_Reg.D_MEM_read_addr_out);
+	$display("MEM_WB_Reg.MemtoReg_out = %d", CPU.MEM_WB_Reg.MemtoReg_out);
+
+    $display("\n##### WB Stage #####\n");
+
+	$display("MUX_RegSrc.data1_i = %d", CPU.MUX_RegSrc.data1_i);
+	$display("MUX_RegSrc.data2_i = %d", CPU.MUX_RegSrc.data2_i);
+	$display("MUX_RegSrc.data_o = %d", CPU.MUX_RegSrc.data_o);
+
+    $display("\n");
+
     // print Registers
     $fdisplay(outfile, "Registers");
     $fdisplay(outfile, "R0(r0) = %d, R8 (t0) = %d, R16(s0) = %d, R24(t8) = %d", CPU.Registers.register[0], CPU.Registers.register[8] , CPU.Registers.register[16], CPU.Registers.register[24]);
