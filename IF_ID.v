@@ -1,4 +1,4 @@
-module IF_ID (instruction_in, instruction_out, IF_ID_Write, IF_Flush, clk, reset);
+module IF_ID (instruction_in, instruction_out, IF_ID_Write, IF_Flush, clk, reset, PC_in, PC_out);
 	// 1. data content
 	input [31:0] instruction_in;
 	output [31:0] instruction_out;
@@ -11,12 +11,13 @@ module IF_ID (instruction_in, instruction_out, IF_ID_Write, IF_Flush, clk, reset
 	input clk, reset;
 	// 4. PC
 	input [31:0]	PC_in;
-
+	output [31:0]	PC_out;
 	reg [31:0] PC_out, instruction_out;
 
 	always @(posedge clk or posedge reset)
 	begin
 		if (reset==1'b1)
+		begin
 			PC_out <= 32'b0;
 			instruction_out <= 32'b0;
 		end
