@@ -3,7 +3,7 @@ module ID_EX (ID_Flush_lwstall,  RegWrite_in, MemtoReg_in, RegWrite_out,
 	ALUSrc_out, ALUOp_in, ALUOp_out, reg_read_data_1_in, reg_read_data_2_in, 
 	immi_sign_extended_in, reg_read_data_1_out, reg_read_data_2_out, immi_sign_extended_out, 
 	IF_ID_RegisterRs1_in, IF_ID_RegisterRs2_in, IF_ID_RegisterRd_in, IF_ID_RegisterRs1_out, 
-	IF_ID_RegisterRs2_out, IF_ID_RegisterRd_out, clk, /*reset*/);
+	IF_ID_RegisterRs2_out, IF_ID_RegisterRd_out, clk/*, reset*/);
 	// 1. hazard control signal (sync rising edge)
 	// if either ID_Flush_lwstall or ID_Flush_Branch equals 1,
 	// then clear all WB, MEM and EX control signal to 0 on rising edge
