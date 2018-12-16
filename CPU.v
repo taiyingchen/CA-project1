@@ -72,7 +72,7 @@ IF_ID IF_ID_Reg(
 	.instruction_out(inst), 
 	.IF_ID_Write	(Hazard_Detection_Unit.IF_ID_Write_o), //to stall_for_load Control Unit 
 	.IF_Flush		(andGate_o), //whether branch 
-	.clk			(clk), 
+	.clk			(clk) 
 	// .reset			(reset)
 );
 // ID stage:----------------------------------------------------------------
@@ -225,7 +225,7 @@ EX_MEM EX_MEM_Reg(
 	.reg_read_data_2_out(Data_Memory.data_i), 
 	.ID_EX_RegisterRd_in(ID_EX_Reg.IF_ID_RegisterRd_out), //from EX_RegisterRd MUX(needed?)
 	.EX_MEM_RegisterRd_out(EX_MEM_RegisterRd), 
-	.clk			(clk), 
+	.clk			(clk)
 	// .reset			(reset)
 );
 
@@ -266,7 +266,7 @@ MEM_WB MEM_WB_Reg(
 	.D_MEM_read_addr_out(MUX_RegSrc.data2_i), 
 	.EX_MEM_RegisterRd_in(EX_MEM_RegisterRd), 
 	.MEM_WB_RegisterRd_out(MEM_WB_RegisterRd), 
-	.clk				(clk), 
+	.clk				(clk)
 	// .reset				(reset)
 );
 // WB stage:----------------------------------------------------------------
