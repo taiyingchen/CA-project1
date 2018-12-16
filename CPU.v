@@ -158,8 +158,8 @@ ID_EX ID_EX_Reg(
 	.IF_ID_RegisterRs1_in(inst[19:15]),
 	.IF_ID_RegisterRs2_in(inst[24:20]), 
 	.IF_ID_RegisterRd_in(inst[11:7]), 
-	.IF_ID_RegisterRs1_out(Forwarding_Unit.ID_EX_Rs), //to forwarding unit
-	.IF_ID_RegisterRs2_out(Forwarding_Unit.ID_EX_Rt), //to forwarding unit, also to EX_RegisterRd MUX(needed?)
+	.IF_ID_RegisterRs1_out(Forwarding_Unit.ID_EX_Rs1), //to forwarding unit
+	.IF_ID_RegisterRs2_out(Forwarding_Unit.ID_EX_Rs2), //to forwarding unit, also to EX_RegisterRd MUX(needed?)
 	.IF_ID_RegisterRd_out(EX_MEM_Reg.ID_EX_RegisterRd_in), //to EX_RegisterRd MUX(needed?)
 	.clk				(clk)
 );
