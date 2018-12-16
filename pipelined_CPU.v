@@ -11,6 +11,9 @@ input               rst_i;
 input               start_i;
 
 wire    [31:0]  inst_addr, inst,imm_sign_extended_data;
+wire [4:0] EX_MEM_RegisterRd,MEM_WB_RegisterRd; //to forwarding unit, 
+wire EX_MEM_RegWrite,MEM_WB_RegWrite;// to forwarding unit, registers
+
 //project1 new
 wire    zero, branch;
 wire    andGate_o;
@@ -64,7 +67,7 @@ IF_ID IF_ID_Reg(
 	// .PC_out			(ID_EX_Reg.PC_in), 
 	.instruction_in	(Instruction_Memory.instr_o), 
 	.instruction_out(inst), 
-	.IF_ID_Write	(), //forwarding control unit 
+	.IF_ID_Write	(), //to stall_for_load Control Unit 
 	.IF_Flush		(), //hazard unit
 	.clk			(clk), 
 	.reset			(reset)
@@ -96,7 +99,7 @@ Registers Registers(
     .RS2addr_i   (inst[24:20]),
     .RDaddr_i   (MEM_WB_RegisterRd),//inst[11:7]
     .RDdata_i   (WriteBack_data),//from the MUX_RegSrc
-    .RegWrite_i (Control.RegWrite_o),
+    .RegWrite_i (MEM_WB_RegWrite),//from the MEM_WB signal
     .RS1data_o   (ALU.data1_i),
     .RS2data_o   (MUX_ALUSrc.data1_i)
 );
@@ -142,8 +145,8 @@ ID_EX ID_EX_Reg(
 	.IF_ID_RegisterRs_in(inst[19:15]),
 	.IF_ID_RegisterRt_in(inst[24:20]), 
 	.IF_ID_RegisterRd_in(inst[11:7]), 
-	.IF_ID_RegisterRs_out(), //to forwarding unit
-	.IF_ID_RegisterRt_out(), //to forwarding unit, also to EX_RegisterRd MUX(needed?)
+	.IF_ID_RegisterRs_out(Forwarding_Unit.ID_EX_Rs), //to forwarding unit
+	.IF_ID_RegisterRt_out(Forwarding_Unit.ID_EX_Rt), //to forwarding unit, also to EX_RegisterRd MUX(needed?)
 	.IF_ID_RegisterRd_out(EX_MEM_Reg.ID_EX_RegisterRd_in), //to EX_RegisterRd MUX(needed?)
 	// .IF_ID_funct_in		(),  //inst[a:b]
 	// .IF_ID_funct_out	(),  //to ALU_Control(needed?)
@@ -152,22 +155,23 @@ ID_EX ID_EX_Reg(
 );
 // EX stage:----------------------------------------------------------------
 
+
 //project1 new (Lin)
 wire 	[31:0]	EX_MEM_ALU_result;
 MUX32_3to1 ALU_input1(//input1 from Registers, input2 from WB MUX, input3 from ALU result(not implemented yet)
     .data1_i    (ID_EX_Reg.reg_read_data_1_out),
     .data2_i    (WriteBack_data),	
     .data3_i    (EX_MEM_ALU_result),	
-	.select_i	(), //from forwarding unit
+	.select_i	(Forwarding_Unit.forwardA_o), //from forwarding unit
 	.data_o		(ALU.data1_i)
 );
 MUX32_4to1 ALU_input2(//input1 from Registers, input2 from WB MUX, input3 from ALU result, input4 from ID/EX imm(not implemented yet)
     .data1_i    (ID_EX_Reg.reg_read_data_2_out),
     .data2_i    (WriteBack_data),	
     .data3_i    (EX_MEM_ALU_result),	
-	.select_i	(), //from forwarding unit(decide from first three input)
+	.select_i	(Forwarding_Unit.forwardB_o), //from forwarding unit(decide from first three input)
 	.data4_i    (ID_EX_Reg.immi_sign_extended_out),	//imm, if ALUSrc==1 then choose it
-	.ALUSrc		(ID_EX_Reg.ALUSrc_out), //(decide to use imm or first three )
+	.ALUSrc		(ID_EX_Reg.ALUSrc_out), //(decide to use imm(for the addi instruction) or first three )
 	.data_o		(ALU.data2_i)
 );
 
@@ -190,12 +194,12 @@ ALU_Control ALU_Control(
 );
 
 //project1 new (Lin)
-wire [4:0] EX_MEM_RegisterRd; //to forwarding unit
+
 EX_MEM EX_MEM_Reg(
 	.EX_Flush		(), //hazard unit, control hazard
 	.RegWrite_in	(ID_EX_Reg.RegWrite_out), 
 	.MemtoReg_in	(ID_EX_Reg.MemtoReg_out), 
-	.RegWrite_out	(MEM_WB_Reg.RegWrite_in), 
+	.RegWrite_out	(EX_MEM_RegWrite), 
 	.MemtoReg_out	(MEM_WB_Reg.MemtoReg_in), 
 	.Branch_in		(ID_EX_Reg.Branch_out), 
 	.MemRead_in		(ID_EX_Reg.MemRead_out), 
@@ -214,6 +218,19 @@ EX_MEM EX_MEM_Reg(
 	.clk			(clk), 
 	.reset			(reset)
 );
+
+Forwarding_Unit Forwarding_Unit(
+    .ID_EX_Rs		(ID_EX_Reg.IF_ID_RegisterRs_out),
+    .ID_EX_Rt		(ID_EX_Reg.IF_ID_RegisterRt_out),
+	.EX_MEM_Rd		(EX_MEM_RegisterRd),
+	.EX_MEM_RegWrite(EX_MEM_RegWrite),
+    .MEM_WB_Rd		(MEM_WB_RegisterRd),
+	.MEM_WB_RegWrite(MEM_WB_RegWrite),
+    .forwardA_o		(ALU_input1.select_i),
+	.forwardB_o		(ALU_input2.select_i)
+);
+
+
 // MEM stage:----------------------------------------------------------------
 
 //project1 new (Lin)
@@ -227,11 +244,11 @@ Data_Memory Data_Memory(
 );
 
 //project1 new (Lin)
-wire 	[4:0]	MEM_WB_RegisterRd;//determine which register to write back
+wire 	[4:0]	;//determine which register to write back, and to forwarding unit
 MEM_WB MEM_WB_Reg(
-	.RegWrite_in		(EX_MEM_Reg.RegWrite_out), 
+	.RegWrite_in		(EX_MEM_RegWrite), 
 	.MemtoReg_in		(EX_MEM_Reg.MemtoReg_out), 
-	.RegWrite_out		(), //to forwarding unit
+	.RegWrite_out		(MEM_WB_RegWrite), //to forwarding unit
 	.MemtoReg_out		(MUX_RegSrc.select_i), 
 	.D_MEM_read_data_in	(Data_Memory.data_o), 
 	.D_MEM_read_addr_in	(EX_MEM_ALU_result),
