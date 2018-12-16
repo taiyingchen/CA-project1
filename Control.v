@@ -57,7 +57,7 @@ always @ (Op_i) begin
 	    MemRead_o = 0;
 	    MemWrite_o = 1;
 	    RegWrite_o = 0;
-	    MemtoReg_o = 1'bx;
+	    MemtoReg_o = 1'bx; //?
 	  end
 	7'b1100011://beq
 	  begin  
@@ -67,9 +67,19 @@ always @ (Op_i) begin
 	    MemRead_o = 0;
 	    MemWrite_o = 0;
 	    RegWrite_o = 0;
-	    MemtoReg_o = 1'bx;
+	    MemtoReg_o = 1'bx; //?
 	  end
-  	default : $display("Error in Control."); 
+	7'b0000000://IF-flush(stall for beq predict not taken)
+	  begin  
+	    ALUOp_o = 2'b00;
+	    ALUSrc_o = 1'b0;
+	    Branch_o = 1'b0;
+	    MemRead_o = 1'b0;
+	    MemWrite_o = 1'b0;
+	    RegWrite_o = 1'b0;
+	    MemtoReg_o = 1'b0;
+	  end  	
+	  default : $display("Error in Control."); 
   endcase
 end
 

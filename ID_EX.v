@@ -1,15 +1,15 @@
-module ID_EXEX (ID_Flush_lwstall, ID_Flush_Branch, RegWrite_in, MemtoReg_in, RegWrite_out, MemtoReg_out, Branch_in, MemRead_in, MemWrite_in, Branch_out, MemRead_out, MemWrite_out, /* RegDst_in,  */ALUSrc_in, /* RegDst_out, */ ALUSrc_out, ALUOp_in, ALUOp_out, /*PC_in, PC_out,*/ reg_read_data_1_in, reg_read_data_2_in, immi_sign_extended_in, reg_read_data_1_out, reg_read_data_2_out, immi_sign_extended_out, IF_ID_RegisterRs_in, IF_ID_RegisterRt_in, IF_ID_RegisterRd_in, IF_ID_RegisterRs_out, IF_ID_RegisterRt_out, IF_ID_RegisterRd_out,/* IF_ID_funct_in, IF_ID_funct_out, */clk, reset);
+module ID_EXEX (ID_Flush_lwstall,  RegWrite_in, MemtoReg_in, RegWrite_out, MemtoReg_out, MemRead_in, MemWrite_in, MemRead_out, MemWrite_out, /* RegDst_in,  */ALUSrc_in, /* RegDst_out, */ ALUSrc_out, ALUOp_in, ALUOp_out, /*PC_in, PC_out,*/ reg_read_data_1_in, reg_read_data_2_in, immi_sign_extended_in, reg_read_data_1_out, reg_read_data_2_out, immi_sign_extended_out, IF_ID_RegisterRs_in, IF_ID_RegisterRt_in, IF_ID_RegisterRd_in, IF_ID_RegisterRs_out, IF_ID_RegisterRt_out, IF_ID_RegisterRd_out,/* IF_ID_funct_in, IF_ID_funct_out, */clk, reset);
 	// 1. hazard control signal (sync rising edge)
 	// if either ID_Flush_lwstall or ID_Flush_Branch equals 1,
 	// then clear all WB, MEM and EX control signal to 0 on rising edge
 	// do not need to clear addr, data or reg content
-	input ID_Flush_lwstall, ID_Flush_Branch;
+	input ID_Flush_lwstall;
 	// 2. WB control signal
 	input RegWrite_in, MemtoReg_in;
 	output RegWrite_out, MemtoReg_out;
 	// 3. MEM control signal
-	input Branch_in, MemRead_in, MemWrite_in;
-	output Branch_out, MemRead_out, MemWrite_out;
+	input MemRead_in, MemWrite_in;
+	output MemRead_out, MemWrite_out;
 	// 4. EX control signal
 	input /* RegDst_in, */ ALUSrc_in;
 	input [1:0] ALUOp_in;
@@ -45,7 +45,7 @@ module ID_EXEX (ID_Flush_lwstall, ID_Flush_Branch, RegWrite_in, MemtoReg_in, Reg
 		begin
 			RegWrite_out = 1'b0;
 			MemtoReg_out = 1'b0;
-			Branch_out = 1'b0;
+			// Branch_out = 1'b0;
 			MemRead_out = 1'b0;
 			MemWrite_out = 1'b0;
 			// RegDst_out = 1'b0;
@@ -64,28 +64,28 @@ module ID_EXEX (ID_Flush_lwstall, ID_Flush_Branch, RegWrite_in, MemtoReg_in, Reg
 		begin
 			RegWrite_out = 1'b0;
 			MemtoReg_out = 1'b0;
-			Branch_out = 1'b0;
+			// Branch_out = 1'b0;
 			MemRead_out = 1'b0;
 			MemWrite_out = 1'b0;
 			// RegDst_out = 1'b0;
 			ALUSrc_out = 1'b0;
 			ALUOp_out = 2'b0;
 		end
-		else if (ID_Flush_Branch == 1'b1)
+/* 		else if (ID_Flush_Branch == 1'b1)
 		begin
 			RegWrite_out = 1'b0;
 			MemtoReg_out = 1'b0;
-			Branch_out = 1'b0;
+			// Branch_out = 1'b0;
 			MemRead_out = 1'b0;
 			MemWrite_out = 1'b0;
 			// RegDst_out = 1'b0;
 			ALUSrc_out = 1'b0;
 			ALUOp_out = 2'b0;
-		end
+		end */
 		else begin
 			RegWrite_out = RegWrite_in;
 			MemtoReg_out = MemtoReg_in;
-			Branch_out = Branch_in;
+			// Branch_out = Branch_in;
 			MemRead_out = MemRead_in;
 			MemWrite_out = MemWrite_in;
 			// RegDst_out = RegDst_in;

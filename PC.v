@@ -26,7 +26,7 @@ always@(posedge clk_i or negedge rst_i) begin
         if(start_i)
             pc_o <= pc_i;
         else
-            pc_o <= pc_o;
+            pc_o <= pc_o;//?
     end
 end
 

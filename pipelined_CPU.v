@@ -14,10 +14,14 @@ wire    [31:0]  inst_addr, inst,imm_sign_extended_data;
 wire [4:0] EX_MEM_RegisterRd,MEM_WB_RegisterRd; //to forwarding unit, 
 wire EX_MEM_RegWrite,MEM_WB_RegWrite;// to forwarding unit, registers
 
-//project1 new
-wire    zero, branch;
+//project1 new (Lin)
+wire 	[31:0]  RS1data, RS2data;
+wire    zero, branch;//zero means if branch succeed(RS1data==RS2data), branch means the beq instruction in ID stage
 wire    andGate_o;
-assign  andGate_o = branch  && zero;
+
+
+assign 	zero = (RS1data==RS2data)?1:0;
+assign  andGate_o = branch  && zero;//to PCSrc and IF_Flush
 
 
 // IF stage:----------------------------------------------------------------
@@ -26,9 +30,9 @@ assign  andGate_o = branch  && zero;
 
 //project1 new
 MUX32 MUX_PCSrc(
-    .data1_i    (Add_PC.data_o),
-    .data2_i    (Add_Imm.data_o),
-    .select_i   (andGate_o),
+    .data1_i    (Add_PC.data_o),//branch not taken
+    .data2_i    (Add_Imm.data_o),//branch taken 
+    .select_i   (andGate_o), //if andGate_o == 1, branch
     .data_o     (PC.pc_i)
 );
 
@@ -68,7 +72,7 @@ IF_ID IF_ID_Reg(
 	.instruction_in	(Instruction_Memory.instr_o), 
 	.instruction_out(inst), 
 	.IF_ID_Write	(), //to stall_for_load Control Unit 
-	.IF_Flush		(), //hazard unit
+	.IF_Flush		(andGate_o), //whether branch 
 	.clk			(clk), 
 	.reset			(reset)
 );
@@ -82,7 +86,7 @@ Control Control(//flush,hazard not yet
     .ALUOp_o    (ID_EX_Reg.ALUOp_in),
     .ALUSrc_o   (ID_EX_Reg.ALUSrc_in),
     //MEM
-    .Branch_o   (ID_EX_Reg.Branch_in),
+    .Branch_o   (branch), //modified branch in ID stage
     .MemRead_o  (ID_EX_Reg.MemRead_in),
     .MemWrite_o (ID_EX_Reg.MemWrite_in),
     //WB
@@ -100,8 +104,8 @@ Registers Registers(
     .RDaddr_i   (MEM_WB_RegisterRd),//inst[11:7]
     .RDdata_i   (WriteBack_data),//from the MUX_RegSrc
     .RegWrite_i (MEM_WB_RegWrite),//from the MEM_WB signal
-    .RS1data_o   (ALU.data1_i),
-    .RS2data_o   (MUX_ALUSrc.data1_i)
+    .RS1data_o   (RS1data),
+    .RS2data_o   (RS2data)
 );
 
 
@@ -117,15 +121,15 @@ Sign_Extend Sign_Extend(
 //project1 new (Lin)
 ID_EX ID_EX_Reg(
 	.ID_Flush_lwstall	(), //stall control for load instruction
-	.ID_Flush_Branch	(), //hazard unit, control hazard
+	// .ID_Flush_Branch	(), 
 	.RegWrite_in		(Control.RegWrite_o), 
 	.MemtoReg_in		(Control.MemtoReg_o), 
 	.RegWrite_out		(EX_MEM_Reg.RegWrite_in), 
 	.MemtoReg_out		(EX_MEM_Reg.MemtoReg_in), 
-	.Branch_in			(Control.Branch_o), 
+	// .Branch_in			(Control.Branch_o), 
 	.MemRead_in			(Control.MemRead_o), 
 	.MemWrite_in		(Control.MemWrite_o), 
-	.Branch_out			(EX_MEM_Reg.Branch_in), 
+	// .Branch_out			(EX_MEM_Reg.Branch_in), 
 	.MemRead_out		(EX_MEM_Reg.MemRead_in), 
 	.MemWrite_out		(EX_MEM_Reg.MemWrite_in), 
 	// .RegDst_in			(), //from Control, needed?
@@ -136,8 +140,8 @@ ID_EX ID_EX_Reg(
 	.ALUOp_out			(ALU_Control.ALUOp_i), 
 	// .PC_in				(IF_ID_Reg.PC_out), 
 	// .PC_out				(), //to the adder of the branch address
-	.reg_read_data_1_in	(), //from Mux_N_bit(WB data forward to ALU)
-	.reg_read_data_2_in	(), //from Mux_N_bit(WB data forward to ALU) 
+	.reg_read_data_1_in	(RS1data), 
+	.reg_read_data_2_in	(RS2data), 
 	.immi_sign_extended_in(imm_sign_extended_data), 
 	.reg_read_data_1_out(ALU_input1.data1_i), //to ALU_input1
 	.reg_read_data_2_out(ALU_input2.data1_i), //to ALU_input2
@@ -181,8 +185,8 @@ ALU ALU(
     .data1_i    (ALU_input1.data_o),
     .data2_i    (ALU_input2.data_o),
     .ALUCtrl_i  (ALU_Control.ALUCtrl_o),
-    .data_o     (EX_MEM_Reg.ALU_result_in),
-    .Zero_o     (EX_MEM_Reg.ALU_zero_in)
+    .data_o     (EX_MEM_Reg.ALU_result_in)//,
+    // .Zero_o     (EX_MEM_Reg.ALU_zero_in)
 );
 
 //project1 new (Lin)
@@ -201,10 +205,10 @@ EX_MEM EX_MEM_Reg(
 	.MemtoReg_in	(ID_EX_Reg.MemtoReg_out), 
 	.RegWrite_out	(EX_MEM_RegWrite), 
 	.MemtoReg_out	(MEM_WB_Reg.MemtoReg_in), 
-	.Branch_in		(ID_EX_Reg.Branch_out), 
+	// .Branch_in		(ID_EX_Reg.Branch_out), 
 	.MemRead_in		(ID_EX_Reg.MemRead_out), 
 	.MemWrite_in	(ID_EX_Reg.MemWrite_out),
-	.Branch_out		(branch), // to the branch and-gate(result to the jump_OR_branch unit)
+	// .Branch_out		(branch), 
 	.MemRead_out	(Data_Memory.MemRead_i), 
 	.MemWrite_out	(Data_Memory.MemWrite_i),
 	.ALU_zero_in	(ALU.Zero_o), 
