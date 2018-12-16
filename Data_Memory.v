@@ -5,7 +5,7 @@ module Data_Memory
     data_i,
     MemRead_i,
     MemWrite_i,
-    data_o,
+    data_o
 );
 
 // Interface
