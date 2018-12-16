@@ -129,29 +129,21 @@ Hazard_Detection_Unit Hazard_Detection_Unit(
 );
 
 
-
 //project1 new (Lin)
 ID_EX ID_EX_Reg(
 	.ID_Flush_lwstall	(Hazard_Detection_Unit.ID_Flush_lwstall_o), //stall control for load instruction
-	// .ID_Flush_Branch	(), 
 	.RegWrite_in		(Control.RegWrite_o), 
 	.MemtoReg_in		(Control.MemtoReg_o), 
 	.RegWrite_out		(EX_MEM_Reg.RegWrite_in), 
 	.MemtoReg_out		(EX_MEM_Reg.MemtoReg_in), 
-	// .Branch_in			(Control.Branch_o), 
 	.MemRead_in			(Control.MemRead_o), 
 	.MemWrite_in		(Control.MemWrite_o), 
-	// .Branch_out			(EX_MEM_Reg.Branch_in), 
 	.MemRead_out		(EX_MEM_Reg.MemRead_in), 
 	.MemWrite_out		(EX_MEM_Reg.MemWrite_in), 
-	// .RegDst_in			(), //from Control, needed?
 	.ALUSrc_in			(Control.ALUSrc_o), 
-	// .RegDst_out			(), //to EX_RegisterRd MUX(what is EX_RegisterRd MUX?)
 	.ALUSrc_out			(ALU_input2.ALUSrc), 
 	.ALUOp_in			(Control.ALUOp_o),
 	.ALUOp_out			(ALU_Control.ALUOp_i), 
-	// .PC_in				(IF_ID_Reg.PC_out), 
-	// .PC_out				(), //to the adder of the branch address
 	.reg_read_data_1_in	(RS1data), 
 	.reg_read_data_2_in	(RS2data), 
 	.immi_sign_extended_in(imm_sign_extended_data), 
@@ -195,8 +187,7 @@ ALU ALU(
     .data1_i    (ALU_input1.data_o),
     .data2_i    (ALU_input2.data_o),
     .ALUCtrl_i  (ALU_Control.ALUCtrl_o),
-    .data_o     (EX_MEM_Reg.ALU_result_in)//,
-    // .Zero_o     (EX_MEM_Reg.ALU_zero_in)
+    .data_o     (EX_MEM_Reg.ALU_result_in)
 );
 
 //project1 new (Lin)
@@ -215,14 +206,10 @@ EX_MEM EX_MEM_Reg(
 	.MemtoReg_in	(ID_EX_Reg.MemtoReg_out), 
 	.RegWrite_out	(EX_MEM_RegWrite), 
 	.MemtoReg_out	(MEM_WB_Reg.MemtoReg_in), 
-	// .Branch_in		(ID_EX_Reg.Branch_out), 
 	.MemRead_in		(ID_EX_Reg.MemRead_out), 
 	.MemWrite_in	(ID_EX_Reg.MemWrite_out),
-	// .Branch_out		(branch), 
 	.MemRead_out	(Data_Memory.MemRead_i), 
 	.MemWrite_out	(Data_Memory.MemWrite_i),
-	// .ALU_zero_in	(ALU.Zero_o), 
-	// .ALU_zero_out	(zero), // to the branch and-gate
 	.ALU_result_in	(ALU.data_o),
 	.reg_read_data_2_in(ALU_input2.data_o), //from ALU_input2(mux3to1_B)
 	.ALU_result_out	(EX_MEM_ALU_result),
