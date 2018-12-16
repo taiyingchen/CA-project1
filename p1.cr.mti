@@ -68,19 +68,19 @@ Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 
 Top level modules:
 	Hazard_Detection_Unit
 
-} {} {}} C:/Users/user/Desktop/CA-project1/CPU.v {1 {vlog -work work -stats=none C:/Users/user/Desktop/CA-project1/CPU.v
-Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
--- Compiling module CPU
-
-Top level modules:
-	CPU
-
 } {} {}} C:/Users/user/Desktop/CA-project1/Adder.v {1 {vlog -work work -stats=none C:/Users/user/Desktop/CA-project1/Adder.v
 Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
 -- Compiling module Adder
 
 Top level modules:
 	Adder
+
+} {} {}} C:/Users/user/Desktop/CA-project1/CPU.v {1 {vlog -work work -stats=none C:/Users/user/Desktop/CA-project1/CPU.v
+Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+-- Compiling module CPU
+
+Top level modules:
+	CPU
 
 } {} {}} C:/Users/user/Desktop/CA-project1/testbench.v {1 {vlog -work work -stats=none C:/Users/user/Desktop/CA-project1/testbench.v
 Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
@@ -89,6 +89,13 @@ Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 
 Top level modules:
 	TestBench
 
+} {} {}} C:/Users/user/Desktop/CA-project1/Sign_Extend.v {1 {vlog -work work -stats=none C:/Users/user/Desktop/CA-project1/Sign_Extend.v
+Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+-- Compiling module Sign_Extend
+
+Top level modules:
+	Sign_Extend
+
 } {} {}} C:/Users/user/Desktop/CA-project1/Registers.v {1 {vlog -work work -stats=none C:/Users/user/Desktop/CA-project1/Registers.v
 Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
 -- Compiling module Registers
@@ -96,12 +103,12 @@ Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 
 Top level modules:
 	Registers
 
-} {} {}} C:/Users/user/Desktop/CA-project1/Sign_Extend.v {1 {vlog -work work -stats=none C:/Users/user/Desktop/CA-project1/Sign_Extend.v
+} {} {}} C:/Users/user/Desktop/CA-project1/pipelined_CPU.v {1 {vlog -work work -stats=none C:/Users/user/Desktop/CA-project1/pipelined_CPU.v
 Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
--- Compiling module Sign_Extend
+-- Compiling module pipelined_CPU
 
 Top level modules:
-	Sign_Extend
+	pipelined_CPU
 
 } {} {}} C:/Users/user/Desktop/CA-project1/ALU_Control.v {1 {vlog -work work -stats=none C:/Users/user/Desktop/CA-project1/ALU_Control.v
 Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
