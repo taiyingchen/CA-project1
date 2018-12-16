@@ -251,7 +251,7 @@ Data_Memory Data_Memory(
     .MemRead_i  (EX_MEM_Reg.MemRead_out),
     .MemWrite_i (EX_MEM_Reg.MemWrite_out),
     .data_o     (MEM_WB_Reg.D_MEM_read_data_in),
-	.clk		(clk)
+    .clk_i		(clk_i)
 );
 
 //project1 new (Lin)
