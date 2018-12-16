@@ -42,7 +42,7 @@ PC PC(
 
 //project1 new (Lin)
 Adder Add_Imm(//Shouldhould we put this into the ID stage, and pass PC through the IF/ID register? 
-    .data1_in   (PC.pc_o),
+    .data1_in   (IF_ID_Reg.PC_out),
     .data2_in   (imm_sign_extended_data<<1),
     .data_o     (MUX_PCSrc.data2_i)
 );
@@ -63,12 +63,12 @@ Instruction_Memory Instruction_Memory(
 
 //project1 new (Lin)
 IF_ID IF_ID_Reg(
-	// .PC_in			(inst_addr), 
-	// .PC_out			(ID_EX_Reg.PC_in), 
+	.PC_in			(inst_addr), 
+	.PC_out			(Add_Imm.data1_in),//(Peiwen)
 	.instruction_in	(Instruction_Memory.instr_o), 
 	.instruction_out(inst), 
-	.IF_ID_Write	(), //to stall_for_load Control Unit 
-	.IF_Flush		(), //hazard unit
+	//.IF_ID_Write	(), //to stall_for_load Control Unit 
+	//.IF_Flush		(), //hazard unit
 	.clk			(clk), 
 	.reset			(reset)
 );
