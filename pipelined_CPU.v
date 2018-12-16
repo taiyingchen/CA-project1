@@ -20,6 +20,7 @@ wire    zero, branch;//zero means if branch succeed(RS1data==RS2data), branch me
 wire    andGate_o;
 
 
+//project1 new (Lin)
 assign 	zero = (RS1data==RS2data)?1:0;
 assign  andGate_o = branch  && zero;//to PCSrc and IF_Flush
 
@@ -46,7 +47,7 @@ PC PC(
 
 //project1 new (Lin)
 Adder Add_Imm(//Shouldhould we put this into the ID stage, and pass PC through the IF/ID register? 
-    .data1_in   (PC.pc_o),
+    .data1_in   (IF_ID_Reg.PC_out),
     .data2_in   (imm_sign_extended_data<<1),
     .data_o     (MUX_PCSrc.data2_i)
 );
@@ -67,8 +68,8 @@ Instruction_Memory Instruction_Memory(
 
 //project1 new (Lin)
 IF_ID IF_ID_Reg(
-	// .PC_in			(inst_addr), 
-	// .PC_out			(ID_EX_Reg.PC_in), 
+	.PC_in			(inst_addr), 
+	.PC_out			(Add_Imm.data1_in),//(Peiwen)
 	.instruction_in	(Instruction_Memory.instr_o), 
 	.instruction_out(inst), 
 	.IF_ID_Write	(), //to stall_for_load Control Unit 
@@ -152,8 +153,6 @@ ID_EX ID_EX_Reg(
 	.IF_ID_RegisterRs_out(Forwarding_Unit.ID_EX_Rs), //to forwarding unit
 	.IF_ID_RegisterRt_out(Forwarding_Unit.ID_EX_Rt), //to forwarding unit, also to EX_RegisterRd MUX(needed?)
 	.IF_ID_RegisterRd_out(EX_MEM_Reg.ID_EX_RegisterRd_in), //to EX_RegisterRd MUX(needed?)
-	// .IF_ID_funct_in		(),  //inst[a:b]
-	// .IF_ID_funct_out	(),  //to ALU_Control(needed?)
 	.clk				(clk), 
 	.reset				(reset)
 );

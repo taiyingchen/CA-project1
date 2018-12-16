@@ -9,7 +9,6 @@ module IF_ID (PC_in, PC_out,instruction_in, instruction_out, IF_ID_Write, IF_Flu
 	// 3. general contorl
 	// reset: async; set all register content to 0
 	input clk, reset;
-
 	reg [31:0] PC_out,instruction_out;
 
 	always @(posedge clk or posedge reset)
@@ -31,5 +30,9 @@ module IF_ID (PC_in, PC_out,instruction_in, instruction_out, IF_ID_Write, IF_Flu
 		end
 
 	end
+
+
+
+
 	
 endmodule
