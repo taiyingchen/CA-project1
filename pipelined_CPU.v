@@ -221,8 +221,8 @@ EX_MEM EX_MEM_Reg(
 	// .Branch_out		(branch), 
 	.MemRead_out	(Data_Memory.MemRead_i), 
 	.MemWrite_out	(Data_Memory.MemWrite_i),
-	.ALU_zero_in	(ALU.Zero_o), 
-	.ALU_zero_out	(zero), // to the branch and-gate
+	// .ALU_zero_in	(ALU.Zero_o), 
+	// .ALU_zero_out	(zero), // to the branch and-gate
 	.ALU_result_in	(ALU.data_o),
 	.reg_read_data_2_in(ALU_input2.data_o), //from ALU_input2(mux3to1_B)
 	.ALU_result_out	(EX_MEM_ALU_result),

@@ -15,7 +15,7 @@ output reg  [31:0]  data_o;
 
 always@(*) begin
 	if(ALUSrc==1)	begin
-		data_o <= data4_i
+		data_o <= data4_i;
 	end
 	else begin
 		case(select_i)

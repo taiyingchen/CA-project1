@@ -1,4 +1,4 @@
-module EX_MEM (EX_Flush, RegWrite_in, MemtoReg_in, RegWrite_out, MemtoReg_out, MemRead_in, MemWrite_in, Jump_in, MemRead_out, MemWrite_out, Jump_out, jump_addr_in, branch_addr_in, jump_addr_out, branch_addr_out, /* ALU_zero_in, ALU_zero_out, */ ALU_result_in, reg_read_data_2_in, ALU_result_out, reg_read_data_2_out, ID_EX_RegisterRd_in, EX_MEM_RegisterRd_out, clk, reset);
+module EX_MEM (EX_Flush, RegWrite_in, MemtoReg_in, RegWrite_out, MemtoReg_out, MemRead_in, MemWrite_in, MemRead_out, MemWrite_out, ALU_result_in, reg_read_data_2_in, ALU_result_out, reg_read_data_2_out, ID_EX_RegisterRd_in, EX_MEM_RegisterRd_out, clk, reset);
 	// 1. hazard control signal (sync rising edge)
 	// if EX_Flush equals 1,
 	// then clear all WB, MEM control signal to 0 on rising edge
@@ -22,8 +22,7 @@ module EX_MEM (EX_Flush, RegWrite_in, MemtoReg_in, RegWrite_out, MemtoReg_out, M
 	input clk, reset;
 
 	reg RegWrite_out, MemtoReg_out;
-	reg Branch_out, MemRead_out, MemWrite_out;
-	reg [31:0] branch_addr_out;
+	reg MemRead_out, MemWrite_out;
 	// reg ALU_zero_out;
 	reg [31:0] ALU_result_out, reg_read_data_2_out;
 	reg [4:0] EX_MEM_RegisterRd_out;
