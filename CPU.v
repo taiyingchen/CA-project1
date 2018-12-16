@@ -38,7 +38,7 @@ MUX32 MUX_PCSrc(
 PC PC(
     .clk_i      (clk_i),
     .start_i    (start_i),
-    .PCwrite_i	(Hazard_Detection_Unit.PCWrite_o),
+    .PCWrite_i	(Hazard_Detection_Unit.PCWrite_o),
     .pc_i       (MUX_PCSrc.data_o),//project1 new
     .pc_o       (inst_addr)
 );
@@ -120,7 +120,7 @@ Hazard_Detection_Unit Hazard_Detection_Unit(
     .IF_ID_RegisterRs1_i	(inst[19:15]),
     .IF_ID_RegisterRs2_i	(inst[24:20]),
     .ID_EX_RegisterRd_i		(ID_EX_Reg.IF_ID_RegisterRd_out),
-    .PCWrite_o				(PC.PCwrite_i),
+    .PCWrite_o				(PC.PCWrite_i),
     .IF_ID_Write_o			(IF_ID_Reg.IF_ID_Write),
     .ID_Flush_lwstall_o		(ID_EX_Reg.ID_Flush_lwstall)
 );
