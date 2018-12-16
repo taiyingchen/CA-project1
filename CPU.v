@@ -223,7 +223,7 @@ EX_MEM EX_MEM_Reg(
 	.ALU_result_in	(ALU.data_o),
 	.reg_read_data_2_in(ALU_input2.data_o), //from ALU_input2(mux3to1_B)
 	.ALU_result_out	(EX_MEM_ALU_result),
-	.reg_read_data_2_out(Data_Memory.data1_i), 
+	.reg_read_data_2_out(Data_Memory.data_i), 
 	.ID_EX_RegisterRd_in(ID_EX_Reg.IF_ID_RegisterRd_out), //from EX_RegisterRd MUX(needed?)
 	.EX_MEM_RegisterRd_out(EX_MEM_RegisterRd), 
 	.clk			(clk), 
