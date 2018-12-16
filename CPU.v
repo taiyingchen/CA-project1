@@ -110,7 +110,7 @@ Registers Registers(
 
 //project1 new (Lin)
 Sign_Extend Sign_Extend(
-    .data_i     (inst[31:20]),
+    .data_i     (inst),
     .data_o     (imm_sign_extended_data)
 );
 
