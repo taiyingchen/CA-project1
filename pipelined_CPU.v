@@ -73,7 +73,7 @@ IF_ID IF_ID_Reg(
 	.PC_out			(Add_Imm.data1_in),//(Peiwen)
 	.instruction_in	(Instruction_Memory.instr_o), 
 	.instruction_out(inst), 
-	.IF_ID_Write	(), //to stall_for_load Control Unit 
+	.IF_ID_Write	(Hazard_Detection_Unit.IF_ID_Write_o), //to stall_for_load Control Unit 
 	.IF_Flush		(andGate_o), //whether branch 
 	.clk			(clk), 
 	.reset			(reset)
@@ -118,11 +118,21 @@ Sign_Extend Sign_Extend(
 );
 
 
+Hazard_Detection_Unit Hazard_Detection_Unit(
+    .ID_EX_MemRead_i		(ID_EX_Reg.MemRead_out),
+    .IF_ID_RegisterRs1_i	(inst[19:15]),
+    .IF_ID_RegisterRs2_i	(inst[24:20]),
+    .ID_EX_RegisterRd_i		(ID_EX_Reg.IF_ID_RegisterRd_out),
+    .PCWrite_o				(PC.PCwrite_i),
+    .IF_ID_Write_o			(IF_ID_Reg.IF_ID_Write),
+    .ID_Flush_lwstall_o		(ID_EX_Reg.ID_Flush_lwstall)
+);
+
 
 
 //project1 new (Lin)
 ID_EX ID_EX_Reg(
-	.ID_Flush_lwstall	(), //stall control for load instruction
+	.ID_Flush_lwstall	(Hazard_Detection_Unit.ID_Flush_lwstall_o), //stall control for load instruction
 	// .ID_Flush_Branch	(), 
 	.RegWrite_in		(Control.RegWrite_o), 
 	.MemtoReg_in		(Control.MemtoReg_o), 
@@ -148,11 +158,11 @@ ID_EX ID_EX_Reg(
 	.reg_read_data_1_out(ALU_input1.data1_i), //to ALU_input1
 	.reg_read_data_2_out(ALU_input2.data1_i), //to ALU_input2
 	.immi_sign_extended_out(ALU_input2.data4_i), 
-	.IF_ID_RegisterRs_in(inst[19:15]),
-	.IF_ID_RegisterRt_in(inst[24:20]), 
+	.IF_ID_RegisterRs1_in(inst[19:15]),
+	.IF_ID_RegisterRs2_in(inst[24:20]), 
 	.IF_ID_RegisterRd_in(inst[11:7]), 
-	.IF_ID_RegisterRs_out(Forwarding_Unit.ID_EX_Rs), //to forwarding unit
-	.IF_ID_RegisterRt_out(Forwarding_Unit.ID_EX_Rt), //to forwarding unit, also to EX_RegisterRd MUX(needed?)
+	.IF_ID_RegisterRs1_out(Forwarding_Unit.ID_EX_Rs), //to forwarding unit
+	.IF_ID_RegisterRs2_out(Forwarding_Unit.ID_EX_Rt), //to forwarding unit, also to EX_RegisterRd MUX(needed?)
 	.IF_ID_RegisterRd_out(EX_MEM_Reg.ID_EX_RegisterRd_in), //to EX_RegisterRd MUX(needed?)
 	.clk				(clk), 
 	.reset				(reset)

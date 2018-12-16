@@ -6,7 +6,7 @@ module Hazard_Detection_Unit
     ID_EX_RegisterRd_i,
     PCWrite_o,
     IF_ID_Write_o,
-    Flush_o
+    ID_Flush_lwstall_o
 );
 
 // Interface
@@ -16,7 +16,7 @@ input   [4:0]   IF_ID_RegisterRs2_i;
 input   [4:0]   ID_EX_RegisterRd_i;
 output reg  PCWrite_o;
 output reg  IF_ID_Write_o;
-output reg  Flush_o;
+output reg  ID_Flush_lwstall_o;
 
 // Detection unit
 wire    equal_Rs1;
@@ -29,11 +29,11 @@ always@(ID_EX_MemRead_i or equal_Rs1 or equal_Rs2) begin
     if (ID_EX_MemRead_i & (equal_Rs1 | equal_Rs2)) begin
         PCWrite_o <= 0;
         IF_ID_Write_o <= 0;
-        Flush_o <= 1;
+        ID_Flush_lwstall_o <= 1;
     end else begin
         PCWrite_o <= 1;
         IF_ID_Write_o <= 1;
-        Flush_o <= 0;
+        ID_Flush_lwstall_o <= 0;
     end
 end
 
