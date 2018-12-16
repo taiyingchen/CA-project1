@@ -41,6 +41,7 @@ PC PC(
     .clk_i      (clk_i),
     .rst_i      (rst_i),
     .start_i    (start_i),
+    .PCwrite_i	(Hazard_Detection_Unit.PCWrite_o),
     .pc_i       (MUX_PCSrc.data_o),//project1 new
     .pc_o       (inst_addr)
 );
