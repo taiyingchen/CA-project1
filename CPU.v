@@ -1,13 +1,11 @@
 module CPU //project1 new (Lin), not sure about the correctness
 (
     clk_i, 
-    // rst_i,
     start_i
 );
 
 // Ports
 input               clk_i;
-// input               rst_i;
 input               start_i;
 
 wire    [31:0]  inst_addr, inst,imm_sign_extended_data;
@@ -39,7 +37,6 @@ MUX32 MUX_PCSrc(
 
 PC PC(
     .clk_i      (clk_i),
-    // .rst_i      (rst_i),
     .start_i    (start_i),
     .PCwrite_i	(Hazard_Detection_Unit.PCWrite_o),
     .pc_i       (MUX_PCSrc.data_o),//project1 new
