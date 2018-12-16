@@ -1,4 +1,4 @@
-module EX_MEM (EX_Flush, RegWrite_in, MemtoReg_in, RegWrite_out, MemtoReg_out, MemRead_in, MemWrite_in, MemRead_out, MemWrite_out, ALU_result_in, reg_read_data_2_in, ALU_result_out, reg_read_data_2_out, ID_EX_RegisterRd_in, EX_MEM_RegisterRd_out, clk, reset);
+module EX_MEM (EX_Flush, RegWrite_in, MemtoReg_in, RegWrite_out, MemtoReg_out, MemRead_in, MemWrite_in, MemRead_out, MemWrite_out, ALU_result_in, reg_read_data_2_in, ALU_result_out, reg_read_data_2_out, ID_EX_RegisterRd_in, EX_MEM_RegisterRd_out, clk/*, reset*/);
 	// 1. hazard control signal (sync rising edge)
 	// if EX_Flush equals 1,
 	// then clear all WB, MEM control signal to 0 on rising edge
@@ -19,7 +19,7 @@ module EX_MEM (EX_Flush, RegWrite_in, MemtoReg_in, RegWrite_out, MemtoReg_out, M
 	output [4:0] EX_MEM_RegisterRd_out;
 	// general signal
 	// reset: async; set all register content to 0
-	input clk, reset;
+	input clk/*, reset*/;
 
 	reg RegWrite_out, MemtoReg_out;
 	reg MemRead_out, MemWrite_out;
@@ -29,7 +29,7 @@ module EX_MEM (EX_Flush, RegWrite_in, MemtoReg_in, RegWrite_out, MemtoReg_out, M
 
 	always @(posedge clk or posedge reset)
 	begin
-		if (reset == 1'b1)
+		/*if (reset == 1'b1)
 		begin
 		  RegWrite_out <= 1'b0;
 		  MemtoReg_out <= 1'b0;
@@ -41,7 +41,7 @@ module EX_MEM (EX_Flush, RegWrite_in, MemtoReg_in, RegWrite_out, MemtoReg_out, M
 		  reg_read_data_2_out <= 32'b0;
 		  EX_MEM_RegisterRd_out <= 5'b0; 
 		end
-		else if (EX_Flush == 1'b1)
+		else */if (EX_Flush == 1'b1)
 	    begin
 		  RegWrite_out <= 1'b0;
 		  MemtoReg_out <= 1'b0;

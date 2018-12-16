@@ -73,7 +73,7 @@ IF_ID IF_ID_Reg(
 	.IF_ID_Write	(Hazard_Detection_Unit.IF_ID_Write_o), //to stall_for_load Control Unit 
 	.IF_Flush		(andGate_o), //whether branch 
 	.clk			(clk), 
-	.reset			(reset)
+	// .reset			(reset)
 );
 // ID stage:----------------------------------------------------------------
 
@@ -161,8 +161,7 @@ ID_EX ID_EX_Reg(
 	.IF_ID_RegisterRs1_out(Forwarding_Unit.ID_EX_Rs), //to forwarding unit
 	.IF_ID_RegisterRs2_out(Forwarding_Unit.ID_EX_Rt), //to forwarding unit, also to EX_RegisterRd MUX(needed?)
 	.IF_ID_RegisterRd_out(EX_MEM_Reg.ID_EX_RegisterRd_in), //to EX_RegisterRd MUX(needed?)
-	.clk				(clk), 
-	.reset				(reset)
+	.clk				(clk)
 );
 // EX stage:----------------------------------------------------------------
 
@@ -227,7 +226,7 @@ EX_MEM EX_MEM_Reg(
 	.ID_EX_RegisterRd_in(ID_EX_Reg.IF_ID_RegisterRd_out), //from EX_RegisterRd MUX(needed?)
 	.EX_MEM_RegisterRd_out(EX_MEM_RegisterRd), 
 	.clk			(clk), 
-	.reset			(reset)
+	// .reset			(reset)
 );
 
 Forwarding_Unit Forwarding_Unit(
@@ -268,7 +267,7 @@ MEM_WB MEM_WB_Reg(
 	.EX_MEM_RegisterRd_in(EX_MEM_RegisterRd), 
 	.MEM_WB_RegisterRd_out(MEM_WB_RegisterRd), 
 	.clk				(clk), 
-	.reset				(reset)
+	// .reset				(reset)
 );
 // WB stage:----------------------------------------------------------------
 
