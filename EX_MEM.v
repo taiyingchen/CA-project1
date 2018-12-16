@@ -27,7 +27,7 @@ module EX_MEM (EX_Flush, RegWrite_in, MemtoReg_in, RegWrite_out, MemtoReg_out, M
 	reg [31:0] ALU_result_out, reg_read_data_2_out;
 	reg [4:0] EX_MEM_RegisterRd_out;
 
-	always @(posedge clk or posedge reset)
+	always @(posedge clk/*or posedge reset*/)
 	begin
 		/*if (reset == 1'b1)
 		begin
