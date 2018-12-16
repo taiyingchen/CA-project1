@@ -258,7 +258,7 @@ Data_Memory Data_Memory(
 );
 
 //project1 new (Lin)
-wire 	[4:0]	;//determine which register to write back, and to forwarding unit
+// wire	[4:0]	;//determine which register to write back, and to forwarding unit
 MEM_WB MEM_WB_Reg(
 	.RegWrite_in		(EX_MEM_RegWrite), 
 	.MemtoReg_in		(EX_MEM_Reg.MemtoReg_out), 
