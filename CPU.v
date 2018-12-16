@@ -230,8 +230,8 @@ EX_MEM EX_MEM_Reg(
 );
 
 Forwarding_Unit Forwarding_Unit(
-    .ID_EX_Rs		(ID_EX_Reg.IF_ID_RegisterRs_out),
-    .ID_EX_Rt		(ID_EX_Reg.IF_ID_RegisterRt_out),
+    .ID_EX_Rs1		(ID_EX_Reg.IF_ID_RegisterRs1_out),
+    .ID_EX_Rs2		(ID_EX_Reg.IF_ID_RegisterRs2_out),
 	.EX_MEM_Rd		(EX_MEM_RegisterRd),
 	.EX_MEM_RegWrite(EX_MEM_RegWrite),
     .MEM_WB_Rd		(MEM_WB_RegisterRd),
