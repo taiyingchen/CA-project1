@@ -1,4 +1,9 @@
-module ID_EX (ID_Flush_lwstall,  RegWrite_in, MemtoReg_in, RegWrite_out, MemtoReg_out, MemRead_in, MemWrite_in, MemRead_out, MemWrite_out, /* RegDst_in,  */ALUSrc_in, /* RegDst_out, */ ALUSrc_out, ALUOp_in, ALUOp_out, /*PC_in, PC_out,*/ reg_read_data_1_in, reg_read_data_2_in, immi_sign_extended_in, reg_read_data_1_out, reg_read_data_2_out, immi_sign_extended_out, IF_ID_RegisterRs_in, IF_ID_RegisterRt_in, IF_ID_RegisterRd_in, IF_ID_RegisterRs_out, IF_ID_RegisterRt_out, IF_ID_RegisterRd_out,/* IF_ID_funct_in, IF_ID_funct_out, */clk, reset);
+module ID_EXEX (ID_Flush_lwstall,  RegWrite_in, MemtoReg_in, RegWrite_out, 
+	MemtoReg_out, MemRead_in, MemWrite_in, MemRead_out, MemWrite_out, ALUSrc_in, 
+	ALUSrc_out, ALUOp_in, ALUOp_out, reg_read_data_1_in, reg_read_data_2_in, 
+	immi_sign_extended_in, reg_read_data_1_out, reg_read_data_2_out, immi_sign_extended_out, 
+	IF_ID_RegisterRs_in, IF_ID_RegisterRt_in, IF_ID_RegisterRd_in, IF_ID_RegisterRs_out, 
+	IF_ID_RegisterRt_out, IF_ID_RegisterRd_out, clk, reset);
 	// 1. hazard control signal (sync rising edge)
 	// if either ID_Flush_lwstall or ID_Flush_Branch equals 1,
 	// then clear all WB, MEM and EX control signal to 0 on rising edge
