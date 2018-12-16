@@ -3,7 +3,7 @@ module ID_EX (ID_Flush_lwstall,  RegWrite_in, MemtoReg_in, RegWrite_out,
 	ALUSrc_out, ALUOp_in, ALUOp_out, reg_read_data_1_in, reg_read_data_2_in, 
 	immi_sign_extended_in, reg_read_data_1_out, reg_read_data_2_out, immi_sign_extended_out, 
 	IF_ID_RegisterRs1_in, IF_ID_RegisterRs2_in, IF_ID_RegisterRd_in, IF_ID_RegisterRs1_out, 
-	IF_ID_RegisterRs2_out, IF_ID_RegisterRd_out, clk/*, reset*/);
+	IF_ID_RegisterRs2_out, IF_ID_RegisterRd_out, clk, reset);
 	// 1. hazard control signal (sync rising edge)
 	// if either ID_Flush_lwstall or ID_Flush_Branch equals 1,
 	// then clear all WB, MEM and EX control signal to 0 on rising edge
@@ -33,7 +33,7 @@ module ID_EX (ID_Flush_lwstall,  RegWrite_in, MemtoReg_in, RegWrite_out,
 	// output [5:0] IF_ID_funct_out;
 	// general signal
 	// reset: async; set all register content to 0
-	input clk/*, reset*/;
+	input clk, reset;
 	
 	reg RegWrite_out, MemtoReg_out;
 	reg Branch_out, MemRead_out, MemWrite_out;
@@ -44,9 +44,8 @@ module ID_EX (ID_Flush_lwstall,  RegWrite_in, MemtoReg_in, RegWrite_out,
 	reg [4:0] IF_ID_RegisterRs1_out, IF_ID_RegisterRs2_out, IF_ID_RegisterRd_out;
 	reg [5:0] IF_ID_funct_out;
 	
-	always @(posedge clk/* or posedge reset*/)
+	always @(posedge clk or posedge reset)
 	begin
-		/*
 		if (reset == 1'b1)
 		begin
 			RegWrite_out = 1'b0;
@@ -66,7 +65,7 @@ module ID_EX (ID_Flush_lwstall,  RegWrite_in, MemtoReg_in, RegWrite_out,
 			IF_ID_RegisterRd_out = 5'b0;
 			// IF_ID_funct_out = 6'b0;			
 		end
-		else*/ if (ID_Flush_lwstall == 1'b1)
+		else if (ID_Flush_lwstall == 1'b1)
 		begin
 			RegWrite_out = 1'b0;
 			MemtoReg_out = 1'b0;

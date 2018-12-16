@@ -25,7 +25,7 @@ always@(posedge clk_i) begin
     if(~start_i)
         pc_o <= 32'b0;
     else if (~PCWrite_i)
-	pc_o <= pc_o;
+	    pc_o <= pc_o;
     else begin
         if(start_i)
             pc_o <= pc_i;

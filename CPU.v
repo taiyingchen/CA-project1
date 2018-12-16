@@ -16,12 +16,12 @@ wire EX_MEM_RegWrite,MEM_WB_RegWrite;// to forwarding unit, registers
 wire 	[31:0]  RS1data, RS2data;
 wire    zero, branch;//zero means if branch succeed(RS1data==RS2data), branch means the beq instruction in ID stage
 wire    andGate_o;
-
+wire	reset;
 
 //project1 new (Lin)
 assign 	zero = (RS1data==RS2data)?1:0;
 assign  andGate_o = branch  && zero;//to PCSrc and IF_Flush
-
+assign	reset = ~start_i;
 
 // IF stage:----------------------------------------------------------------
 
@@ -72,8 +72,8 @@ IF_ID IF_ID_Reg(
 	.instruction_out(inst), 
 	.IF_ID_Write	(Hazard_Detection_Unit.IF_ID_Write_o), //to stall_for_load Control Unit 
 	.IF_Flush		(andGate_o), //whether branch 
-	.clk			(clk) 
-	// .reset			(reset)
+	.clk			(clk_i),
+	.reset			(reset)
 );
 // ID stage:----------------------------------------------------------------
 
@@ -161,7 +161,8 @@ ID_EX ID_EX_Reg(
 	.IF_ID_RegisterRs1_out(Forwarding_Unit.ID_EX_Rs1), //to forwarding unit
 	.IF_ID_RegisterRs2_out(Forwarding_Unit.ID_EX_Rs2), //to forwarding unit, also to EX_RegisterRd MUX(needed?)
 	.IF_ID_RegisterRd_out(EX_MEM_Reg.ID_EX_RegisterRd_in), //to EX_RegisterRd MUX(needed?)
-	.clk				(clk)
+	.clk				(clk_i),
+	.reset				(reset)
 );
 // EX stage:----------------------------------------------------------------
 
@@ -225,8 +226,8 @@ EX_MEM EX_MEM_Reg(
 	.reg_read_data_2_out(Data_Memory.data_i), 
 	.ID_EX_RegisterRd_in(ID_EX_Reg.IF_ID_RegisterRd_out), //from EX_RegisterRd MUX(needed?)
 	.EX_MEM_RegisterRd_out(EX_MEM_RegisterRd), 
-	.clk			(clk)
-	// .reset			(reset)
+	.clk			(clk_i),
+	.reset			(reset)
 );
 
 Forwarding_Unit Forwarding_Unit(
@@ -262,20 +263,20 @@ MEM_WB MEM_WB_Reg(
 	.MemtoReg_out		(MUX_RegSrc.select_i), 
 	.D_MEM_read_data_in	(Data_Memory.data_o), 
 	.D_MEM_read_addr_in	(EX_MEM_ALU_result),
-	.D_MEM_read_data_out(MUX_RegSrc.data1_i), 
-	.D_MEM_read_addr_out(MUX_RegSrc.data2_i), 
+	.D_MEM_read_data_out(MUX_RegSrc.data2_i), 
+	.D_MEM_read_addr_out(MUX_RegSrc.data1_i), 
 	.EX_MEM_RegisterRd_in(EX_MEM_RegisterRd), 
 	.MEM_WB_RegisterRd_out(MEM_WB_RegisterRd), 
-	.clk				(clk)
-	// .reset				(reset)
+	.clk				(clk_i),
+	.reset				(reset)
 );
 // WB stage:----------------------------------------------------------------
 
 
 //project1 new (Lin)
 MUX32 MUX_RegSrc(//WB MUX
-    .data1_i    (MEM_WB_Reg.D_MEM_read_data_out),
-    .data2_i    (MEM_WB_Reg.D_MEM_read_addr_out),
+    .data1_i    (MEM_WB_Reg.D_MEM_read_addr_out),
+    .data2_i    (MEM_WB_Reg.D_MEM_read_data_out),
     .select_i   (MEM_WB_Reg.MemtoReg_out),
     .data_o     (WriteBack_data)
 );
