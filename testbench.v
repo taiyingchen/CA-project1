@@ -64,12 +64,12 @@ always@(posedge Clk) begin
     if(CPU.andGate_o == 1)flush = flush + 1;  
 
     // print PC
-    $display("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n");
+    $display("\n@@@@@@@@@@@@@@@@@@@@@@@ cycle = %d @@@@@@@@@@@@@@@@@@@@@@@@\n", counter);
 
     $fdisplay(outfile, "cycle = %d, Start = %d, Stall = %d, Flush = %d\nPC = %d", counter, Start, stall, flush, CPU.PC.pc_o);
 
     $display("\n##### IF Stage #####\n");
-
+    /*
 	$display("PC.pc_i = %d", CPU.PC.pc_i);
 	$display("PC.pc_o = %d", CPU.PC.pc_o);
 
@@ -84,12 +84,22 @@ always@(posedge Clk) begin
 	$display("\n\nIF_ID_Reg.PC_out = %d", CPU.IF_ID_Reg.PC_out);
 	$display("IF_ID_Reg.instruction_out = %d", CPU.IF_ID_Reg.PC_out);
 	$display("IF_ID_Reg.IF_ID_Write = %d", CPU.IF_ID_Reg.IF_ID_Write);
-
+    */
     $display("\n##### ID Stage #####\n");
+
+    $display("Registers.RS1data_o = %d", CPU.Registers.RS1data_o);
+
+    $display("ID_EX_Reg.reg_read_data_1_out = %d", CPU.ID_EX_Reg.reg_read_data_1_out);
 
     $display("\n##### EX Stage #####\n");
 
+    $display("ALU_input1.data1_i = %d", CPU.ALU_input1.data1_i);
+
+    $display("ALU.data1_i = %d", CPU.ALU.data1_i);
+    $display("ALU.data2_i = %d", CPU.ALU.data2_i);
     $display("ALU.data_o = %d", CPU.ALU.data_o);
+
+	$display("EX_MEM_Reg.reg_read_data_2_out = %d", CPU.EX_MEM_Reg.reg_read_data_2_out);
 
     $display("\n##### MEM Stage #####\n");
 
@@ -98,6 +108,8 @@ always@(posedge Clk) begin
 	$display("MEM_WB_Reg.D_MEM_read_data_out = %d", CPU.MEM_WB_Reg.D_MEM_read_data_out);
 	$display("MEM_WB_Reg.D_MEM_read_addr_out = %d", CPU.MEM_WB_Reg.D_MEM_read_addr_out);
 	$display("MEM_WB_Reg.MemtoReg_out = %d", CPU.MEM_WB_Reg.MemtoReg_out);
+
+	$display("EX_MEM_ALU_result = %d", CPU.EX_MEM_ALU_result);
 
     $display("\n##### WB Stage #####\n");
 
