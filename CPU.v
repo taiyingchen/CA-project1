@@ -161,6 +161,11 @@ ID_EX ID_EX_Reg(
 	.IF_ID_RegisterRs1_out(Forwarding_Unit.ID_EX_Rs1), //to forwarding unit
 	.IF_ID_RegisterRs2_out(Forwarding_Unit.ID_EX_Rs2), //to forwarding unit, also to EX_RegisterRd MUX(needed?)
 	.IF_ID_RegisterRd_out(EX_MEM_Reg.ID_EX_RegisterRd_in), //to EX_RegisterRd MUX(needed?)
+	// To ALU Control
+    .funct3_in			(inst[14:12]),
+    .funct7_in			(inst[31:25]),
+    .funct3_out			(ALU_Control.funct3_i),
+    .funct7_out			(ALU_Control.funct7_i),
 	.clk				(clk_i),
 	.reset				(reset)
 );
@@ -204,8 +209,8 @@ ALU ALU(
 
 //project1 new (Lin)
 ALU_Control ALU_Control(
-    .funct3_i    (inst[14:12]),
-    .funct7_i    (inst[31:25]), //can we pass this two line through the ID/EX stage?
+    .funct3_i    (ID_EX_Reg.funct3_out),
+    .funct7_i    (ID_EX_Reg.funct7_out), //can we pass this two line through the ID/EX stage? -> No, you can't 
     .ALUOp_i    (ID_EX_Reg.ALUOp_out),
     .ALUCtrl_o  (ALU.ALUCtrl_i)
 );

@@ -3,7 +3,7 @@ module ID_EX (ID_Flush_lwstall,  RegWrite_in, MemtoReg_in, RegWrite_out,
 	ALUSrc_out, ALUOp_in, ALUOp_out, reg_read_data_1_in, reg_read_data_2_in, 
 	immi_sign_extended_in, reg_read_data_1_out, reg_read_data_2_out, immi_sign_extended_out, 
 	IF_ID_RegisterRs1_in, IF_ID_RegisterRs2_in, IF_ID_RegisterRd_in, IF_ID_RegisterRs1_out, 
-	IF_ID_RegisterRs2_out, IF_ID_RegisterRd_out, clk, reset);
+	IF_ID_RegisterRs2_out, IF_ID_RegisterRd_out, funct3_in, funct7_in, funct3_out, funct7_out, clk, reset);
 	// 1. hazard control signal (sync rising edge)
 	// if either ID_Flush_lwstall or ID_Flush_Branch equals 1,
 	// then clear all WB, MEM and EX control signal to 0 on rising edge
@@ -33,6 +33,9 @@ module ID_EX (ID_Flush_lwstall,  RegWrite_in, MemtoReg_in, RegWrite_out,
 	// output [5:0] IF_ID_funct_out;
 	// general signal
 	// reset: async; set all register content to 0
+	// To ALU Control
+	input	[2:0]	funct3_in;
+	input	[6:0]	funct7_in;
 	input clk, reset;
 	
 	reg RegWrite_out, MemtoReg_out;
@@ -43,6 +46,8 @@ module ID_EX (ID_Flush_lwstall,  RegWrite_in, MemtoReg_in, RegWrite_out,
 	reg [31:0] reg_read_data_1_out, reg_read_data_2_out, immi_sign_extended_out;
 	reg [4:0] IF_ID_RegisterRs1_out, IF_ID_RegisterRs2_out, IF_ID_RegisterRd_out;
 	reg [5:0] IF_ID_funct_out;
+	output reg	[2:0]	funct3_out;
+	output reg	[6:0]	funct7_out;
 	
 	always @(posedge clk or posedge reset)
 	begin
@@ -63,7 +68,9 @@ module ID_EX (ID_Flush_lwstall,  RegWrite_in, MemtoReg_in, RegWrite_out,
 			IF_ID_RegisterRs1_out = 5'b0;
 			IF_ID_RegisterRs2_out = 5'b0;
 			IF_ID_RegisterRd_out = 5'b0;
-			// IF_ID_funct_out = 6'b0;			
+			// IF_ID_funct_out = 6'b0;
+			funct3_out = 3'b0;
+			funct7_out = 7'b0;			
 		end
 		else if (ID_Flush_lwstall == 1'b1)
 		begin
@@ -75,6 +82,8 @@ module ID_EX (ID_Flush_lwstall,  RegWrite_in, MemtoReg_in, RegWrite_out,
 			// RegDst_out = 1'b0;
 			ALUSrc_out = 1'b0;
 			ALUOp_out = 2'b0;
+			funct3_out = 3'b0;
+			funct7_out = 7'b0;
 		end
 /* 		else if (ID_Flush_Branch == 1'b1)
 		begin
@@ -104,6 +113,8 @@ module ID_EX (ID_Flush_lwstall,  RegWrite_in, MemtoReg_in, RegWrite_out,
 			IF_ID_RegisterRs2_out = IF_ID_RegisterRs2_in;
 			IF_ID_RegisterRd_out = IF_ID_RegisterRd_in;
 			// IF_ID_funct_out = IF_ID_funct_in;
+			funct3_out = funct3_in;
+			funct7_out = funct7_in;
 		end	
 		
 	end	
