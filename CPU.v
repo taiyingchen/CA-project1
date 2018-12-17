@@ -144,7 +144,7 @@ ID_EX ID_EX_Reg(
 	// .RegDst_in			(), //from Control, needed?
 	.ALUSrc_in			(Control.ALUSrc_o), 
 	// .RegDst_out			(), //to EX_RegisterRd MUX(what is EX_RegisterRd MUX?)
-	.ALUSrc_out			(ALU_input2.ALUSrc), 
+	.ALUSrc_out			(ALU_input.select_i), 
 	.ALUOp_in			(Control.ALUOp_o),
 	.ALUOp_out			(ALU_Control.ALUOp_i), 
 	// .PC_in				(IF_ID_Reg.PC_out), 
