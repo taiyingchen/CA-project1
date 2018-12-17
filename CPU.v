@@ -196,7 +196,7 @@ MUX32 ALU_input(
 //project1 new (Lin)
 ALU ALU(
     .data1_i    (ALU_input1.data_o),
-    .data2_i    (ALU_input2.data_o),
+    .data2_i    (ALU_input.data_o),
     .ALUCtrl_i  (ALU_Control.ALUCtrl_o),
     .data_o     (EX_MEM_Reg.ALU_result_in)//,
     // .Zero_o     (EX_MEM_Reg.ALU_zero_in)
