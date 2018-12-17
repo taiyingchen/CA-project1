@@ -42,7 +42,6 @@ initial begin
     
     // Set Input n into data memory at 0x00
     CPU.Data_Memory.memory[0] = 8'h5;       // n = 5 for example
-    CPU.Registers.register[8] = 32'h5;
     
     Clk = 1;
     //Reset = 0;
@@ -56,7 +55,7 @@ initial begin
 end
   
 always@(posedge Clk) begin
-    if(counter == 10)    // stop after 30 cycles
+    if(counter == 30)    // stop after 30 cycles
         $stop;
 
     // put in your own signal to count stall and flush
@@ -68,8 +67,9 @@ always@(posedge Clk) begin
 
     $fdisplay(outfile, "cycle = %d, Start = %d, Stall = %d, Flush = %d\nPC = %d", counter, Start, stall, flush, CPU.PC.pc_o);
 
-    $display("\n##### IF Stage #####\n");
     /*
+    $display("\n##### IF Stage #####\n");
+
 	$display("PC.pc_i = %d", CPU.PC.pc_i);
 	$display("PC.pc_o = %d", CPU.PC.pc_o);
 
@@ -84,7 +84,7 @@ always@(posedge Clk) begin
 	$display("\n\nIF_ID_Reg.PC_out = %d", CPU.IF_ID_Reg.PC_out);
 	$display("IF_ID_Reg.instruction_out = %d", CPU.IF_ID_Reg.PC_out);
 	$display("IF_ID_Reg.IF_ID_Write = %d", CPU.IF_ID_Reg.IF_ID_Write);
-    */
+
     $display("\n##### ID Stage #####\n");
 
     $display("Registers.RS1data_o = %d", CPU.Registers.RS1data_o);
@@ -94,6 +94,8 @@ always@(posedge Clk) begin
     $display("\n##### EX Stage #####\n");
 
     $display("ALU_input1.data1_i = %d", CPU.ALU_input1.data1_i);
+    $display("ALU_input2.data_o = %d", CPU.ALU_input2.data_o);
+    $display("ALU_input.data_o = %d", CPU.ALU_input.data_o);
 
     $display("ALU.data1_i = %d", CPU.ALU.data1_i);
     $display("ALU.data2_i = %d", CPU.ALU.data2_i);
@@ -118,6 +120,7 @@ always@(posedge Clk) begin
 	$display("MUX_RegSrc.data_o = %d", CPU.MUX_RegSrc.data_o);
 
     $display("\n");
+    */
 
     // print Registers
     $fdisplay(outfile, "Registers");
