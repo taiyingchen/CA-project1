@@ -63,7 +63,7 @@ always@(posedge Clk) begin
     if(CPU.andGate_o == 1)flush = flush + 1;  
 
     // print PC
-    $display("\n@@@@@@@@@@@@@@@@@@@@@@@ cycle = %d @@@@@@@@@@@@@@@@@@@@@@@@\n", counter);
+    // $display("\n@@@@@@@@@@@@@@@@@@@@@@@ cycle = %d @@@@@@@@@@@@@@@@@@@@@@@@\n", counter);
 
     $fdisplay(outfile, "cycle = %d, Start = %d, Stall = %d, Flush = %d\nPC = %d", counter, Start, stall, flush, CPU.PC.pc_o);
 
