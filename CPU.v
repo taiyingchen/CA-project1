@@ -154,7 +154,7 @@ ID_EX ID_EX_Reg(
 	.immi_sign_extended_in(imm_sign_extended_data), 
 	.reg_read_data_1_out(ALU_input1.data1_i), //to ALU_input1
 	.reg_read_data_2_out(ALU_input2.data1_i), //to ALU_input2
-	.immi_sign_extended_out(ALU_input2.data4_i), 
+	.immi_sign_extended_out(ALU_input.data2_i), 
 	.IF_ID_RegisterRs1_in(inst[19:15]),
 	.IF_ID_RegisterRs2_in(inst[24:20]), 
 	.IF_ID_RegisterRd_in(inst[11:7]), 
@@ -176,14 +176,20 @@ MUX32_3to1 ALU_input1(//input1 from Registers, input2 from WB MUX, input3 from A
 	.select_i	(Forwarding_Unit.forwardA_o), //from forwarding unit
 	.data_o		(ALU.data1_i)
 );
-MUX32_4to1 ALU_input2(//input1 from Registers, input2 from WB MUX, input3 from ALU result, input4 from ID/EX imm(not implemented yet)
+
+MUX32_3to1 ALU_input2(//input1 from Registers, input2 from WB MUX, input3 from ALU result, input4 from ID/EX imm(not implemented yet)
     .data1_i    (ID_EX_Reg.reg_read_data_2_out),
     .data2_i    (WriteBack_data),	
     .data3_i    (EX_MEM_ALU_result),	
 	.select_i	(Forwarding_Unit.forwardB_o), //from forwarding unit(decide from first three input)
-	.data4_i    (ID_EX_Reg.immi_sign_extended_out),	//imm, if ALUSrc==1 then choose it
-	.ALUSrc		(ID_EX_Reg.ALUSrc_out), //(decide to use imm(for the addi instruction) or first three )
-	.data_o		(ALU.data2_i)
+	.data_o		(ALU_input.data1_i)
+);
+
+MUX32 ALU_input(
+    .data1_i    (ALU_input2.data_o),
+	.data2_i    (ID_EX_Reg.immi_sign_extended_out),
+    .select_i   (ID_EX_Reg.ALUSrc_out),
+    .data_o     (ALU.data2_i)
 );
 
 
